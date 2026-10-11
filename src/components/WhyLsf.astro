@@ -28,7 +28,7 @@ const facts = [
       </dl>
     </div>
 
-    <figure class="scale">
+    <figure class="scale bg-spangle">
       <div class="scale__cols">
         <div class="col">
           <div class="stack">
@@ -61,7 +61,7 @@ const facts = [
   .facts dt { font: 700 var(--t-1) var(--f-display); }
   .facts dd { margin: 0; color: var(--steel); }
 
-  .scale { margin: 0; }
+  .scale { margin: 0; padding: clamp(1.2rem, 3vw, 2rem); border: 1.5px solid #b6bbb5; }
   .scale__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
   .stack { display: flex; flex-direction: column; justify-content: flex-end; height: 310px; border-bottom: 3px solid var(--graphite); margin-inline: -.75rem; padding-inline: .75rem; }
   .layer { position: relative; border: 1.5px solid var(--graphite); margin-top: -1.5px; }

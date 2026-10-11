@@ -30,73 +30,81 @@ const diagonals = [
 const hatch = Array.from({ length: 26 }, (_, i) => 30 + i * 20);
 ---
 <section class="hero" id="top">
-  <div class="wrap hero__in">
-    <div class="hero__text">
-      <h1>از زمین<br />تا کلید</h1>
-      <p class="hero__lead">
-        طراحی، تولید و اجرای سازه سبک فولادی <span dir="ltr">LSF</span> برای ویلا و خانه در مازندران.
-        زمینت رو تحویل می‌گیریم و خونه رو با کلیدش تحویل می‌دیم.
-      </p>
-      <div class="hero__cta">
-        <a class="btn btn--gold" href="#estimate">برآورد هزینه ساخت</a>
-        <a class="btn btn--line" href="tel:+989353066900">تماس با <span dir="ltr">0935 306 6900</span></a>
+  <div class="wrap">
+    <div class="sheet">
+      <div class="ruler" aria-hidden="true">
+        {["۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸"].map((n) => <span>{n}</span>)}
       </div>
+
+      <div class="hero__in">
+        <div class="hero__text">
+          <p class="hero__kicker">پیمانکار رسمی ساختمان در ساری و مازندران</p>
+          <h1>از زمین<br />تا کلید</h1>
+          <p class="hero__lead">
+            طراحی، تولید و اجرای سازه سبک فولادی <span dir="ltr">LSF</span> برای ویلا و خانه. زمینت رو تحویل می‌گیریم و خونه رو
+            با کلیدش تحویل می‌دیم؛ حدود دو ماه از اجرای سازه تا تحویل.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--gold" href="#estimate">برآورد هزینه ساخت</a>
+            <a class="btn btn--line" href="tel:+989353066900">تماس <span dir="ltr">0935 306 6900</span></a>
+          </div>
+        </div>
+
+        <figure class="drawing" aria-label="نقشه نمای یک خانه با اسکلت فولادی سبک که مرحله به مرحله ساخته می‌شود">
+          <svg viewBox="0 0 560 430" class="draw" role="img" aria-hidden="true">
+            <g class="ground">
+              <line class="d" pathLength="1" x1="20" y1="380" x2="540" y2="380" />
+              {hatch.map((x) => <line class="h" x1={x} y1="380" x2={x - 10} y2="392" />)}
+              <rect class="d" pathLength="1" x="70" y="366" width="420" height="14" />
+              <line class="d track" pathLength="1" x1="76" y1={G} x2="484" y2={G} />
+            </g>
+
+            <g class="frame">
+              {studs.map(([x1, y1, x2, y2]) => <line class="stud" x1={x1} y1={y1} x2={x2} y2={y2} />)}
+              {crippleLines.map(([x1, y1, x2, y2]) => <line class="stud" x1={x1} y1={y1} x2={x2} y2={y2} />)}
+              {windows.map((w) => <>
+                <line class="stud" x1={w.x} y1={w.y1} x2={w.x + w.w} y2={w.y1} />
+                <line class="stud" x1={w.x} y1={w.y2} x2={w.x + w.w} y2={w.y2} />
+              </>)}
+              <line class="stud" x1={door.x} y1={door.y1} x2={door.x + door.w} y2={door.y1} />
+              <line class="d track" pathLength="1" x1="76" y1={T} x2="484" y2={T} />
+            </g>
+
+            <g class="truss">
+              <polyline points={`52,209 280,66 508,209`} />
+              {webs.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} />)}
+              {diagonals.map(([x1, y1, x2, y2]) => <line class="thin" x1={x1} y1={y1} x2={x2} y2={y2} />)}
+            </g>
+
+            <g class="light">
+              {windows.map((w) => <rect x={w.x + 3} y={w.y1 + 3} width={w.w - 6} height={w.y2 - w.y1 - 6} />)}
+              <rect x={door.x + 3} y={door.y1 + 3} width={door.w - 6} height={G - door.y1 - 3} />
+            </g>
+
+            <g class="dim">
+              <line x1="80" y1="410" x2="480" y2="410" />
+              <line x1="80" y1="402" x2="80" y2="418" /><line x1="480" y1="402" x2="480" y2="418" />
+              <line x1="530" y1={T} x2="530" y2={G} />
+              <line x1="522" y1={T} x2="538" y2={T} /><line x1="522" y1={G} x2="538" y2={G} />
+            </g>
+          </svg>
+
+          <ol class="stages" aria-label="مراحل">
+            <li data-stage="0">زمین</li>
+            <li data-stage="1">سازه</li>
+            <li data-stage="2">کلید</li>
+          </ol>
+        </figure>
+      </div>
+
+      <dl class="titleblock">
+        <div class="tb-opt"><dt>کارفرما</dt><dd>شما</dd></div>
+        <div class="tb-opt"><dt>پروژه</dt><dd>ویلا یا خانه در مازندران</dd></div>
+        <div><dt>سازه</dt><dd><span dir="ltr">LSF</span>، فولاد گالوانیزه</dd></div>
+        <div><dt>از سازه تا تحویل</dt><dd>حدود ۲ ماه</dd></div>
+        <div class="tb-fest"><dt>جشنواره خانه رویایی</dt><dd>تا ۱۵٪ تخفیف و اقساط</dd></div>
+      </dl>
     </div>
-
-    <figure class="sheet" aria-label="نقشه نمای یک خانه با اسکلت فولادی سبک که مرحله به مرحله ساخته می‌شود">
-      <svg viewBox="0 0 560 430" class="draw" role="img" aria-hidden="true">
-        <g class="ground">
-          <line class="d" pathLength="1" x1="20" y1="380" x2="540" y2="380" />
-          {hatch.map((x) => <line class="h" x1={x} y1="380" x2={x - 10} y2="392" />)}
-          <rect class="d" pathLength="1" x="70" y="366" width="420" height="14" />
-          <line class="d track" pathLength="1" x1="76" y1={G} x2="484" y2={G} />
-        </g>
-
-        <g class="frame">
-          {studs.map(([x1, y1, x2, y2]) => <line class="stud" x1={x1} y1={y1} x2={x2} y2={y2} />)}
-          {crippleLines.map(([x1, y1, x2, y2]) => <line class="stud" x1={x1} y1={y1} x2={x2} y2={y2} />)}
-          {windows.map((w) => <>
-            <line class="stud" x1={w.x} y1={w.y1} x2={w.x + w.w} y2={w.y1} />
-            <line class="stud" x1={w.x} y1={w.y2} x2={w.x + w.w} y2={w.y2} />
-          </>)}
-          <line class="stud" x1={door.x} y1={door.y1} x2={door.x + door.w} y2={door.y1} />
-          <line class="d track" pathLength="1" x1="76" y1={T} x2="484" y2={T} />
-        </g>
-
-        <g class="truss">
-          <polyline points={`52,209 280,66 508,209`} />
-          {webs.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} />)}
-          {diagonals.map(([x1, y1, x2, y2]) => <line class="thin" x1={x1} y1={y1} x2={x2} y2={y2} />)}
-        </g>
-
-        <g class="light">
-          {windows.map((w) => <rect x={w.x + 3} y={w.y1 + 3} width={w.w - 6} height={w.y2 - w.y1 - 6} />)}
-          <rect x={door.x + 3} y={door.y1 + 3} width={door.w - 6} height={G - door.y1 - 3} />
-        </g>
-
-        <g class="dim">
-          <line x1="80" y1="410" x2="480" y2="410" />
-          <line x1="80" y1="402" x2="80" y2="418" /><line x1="480" y1="402" x2="480" y2="418" />
-          <line x1="530" y1={T} x2="530" y2={G} />
-          <line x1="522" y1={T} x2="538" y2={T} /><line x1="522" y1={G} x2="538" y2={G} />
-        </g>
-      </svg>
-
-      <ol class="stages" aria-label="مراحل">
-        <li data-stage="0">زمین</li>
-        <li data-stage="1">سازه</li>
-        <li data-stage="2">کلید</li>
-      </ol>
-
-      <table class="titleblock">
-        <caption class="sr-only">مشخصات کلی</caption>
-        <tbody>
-          <tr><th>سازه</th><td>فولاد گالوانیزه <span dir="ltr">LSF</span></td></tr>
-          <tr><th>از سازه تا تحویل</th><td>حدود ۲ ماه</td></tr>
-          <tr><th>جشنواره خانه رویایی</th><td>تا ۱۵٪ تخفیف و اقساط</td></tr>
-        </tbody>
-      </table>
-    </figure>
   </div>
 </section>
 
@@ -109,32 +117,40 @@ const hatch = Array.from({ length: 26 }, (_, i) => 30 + i * 20);
     background-size: 24px 24px;
     color: var(--zinc);
     overflow: hidden;
+    padding-block: clamp(1.25rem, 3vw, 2.5rem);
   }
-  .hero__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(3rem, 7vw, 6rem); }
-  h1 { font-size: var(--t-5); font-weight: 900; line-height: 1.25; }
-  .hero__lead { font-size: var(--t-2); color: #c3c8c3; margin: 1.6rem 0 2rem; max-width: 24em; line-height: 1.85; }
+  .sheet { border: 1.5px solid #4a5257; }
+  .ruler { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); height: 26px; border-bottom: 1.5px solid #4a5257; font-size: 12px; color: var(--steel-lo); }
+  .ruler span { display: grid; place-items: center; }
+  .ruler span + span { border-inline-start: 1.5px solid #4a5257; }
+
+  .hero__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(2rem, 4vw, 3.5rem); align-items: center; padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 4rem) 1rem; }
+  .hero__kicker { margin: 0 0 1.2rem; font-weight: 600; color: var(--gold); }
+  h1 { font-size: clamp(3.2rem, 8vw, 7.2rem); font-weight: 900; line-height: 1.12; letter-spacing: -1px; }
+  .hero__lead { font-size: var(--t-2); color: #c3c8c3; margin: 1.6rem 0 2rem; max-width: 30em; line-height: 1.9; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: .8rem; }
 
-  .sheet { margin: 0; border: 1.5px solid #4a5257; padding: 1.2rem 1.2rem 0; background: rgba(31, 36, 40, .7); }
+  .drawing { margin: 0; }
   .draw { width: 100%; height: auto; overflow: visible; }
   .draw line, .draw rect, .draw polyline { fill: none; stroke: var(--zinc); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
   .draw .h { stroke-width: 1; opacity: .4; }
   .draw .thin { stroke-width: 1.4; opacity: .8; }
   .draw .stud { stroke: #d6dad5; transform-box: fill-box; transform-origin: 50% 100%; }
-  .draw .truss line, .draw .truss polyline { stroke: var(--zinc); }
-  .draw .light rect { fill: var(--gold); stroke: none; opacity: .78; }
+  .draw .light rect { fill: var(--gold); stroke: none; opacity: .8; }
   .draw .dim line { stroke: var(--red); stroke-width: 1.4; }
 
-  .stages { list-style: none; margin: 1rem -1.2rem 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid #4a5257; }
-  .stages li { padding: .7rem .4rem; text-align: center; font: 700 var(--t-1) var(--f-display); color: var(--steel-lo); position: relative; }
+  .stages { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border: 1.5px solid #4a5257; }
+  .stages li { padding: .65rem .4rem; text-align: center; font-weight: 700; color: var(--steel-lo); transition: color .3s, box-shadow .3s; }
   .stages li + li { border-inline-start: 1.5px solid #4a5257; }
-  .stages li.on { color: var(--zinc); }
-  .stages li.on::after { content: ""; position: absolute; inset-inline: 0; top: -1.5px; height: 3px; background: var(--gold); }
+  .stages li.on { color: var(--zinc); box-shadow: inset 0 3px 0 var(--gold); }
 
-  .titleblock { width: calc(100% + 2.4rem); margin: 0 -1.2rem; border-collapse: collapse; font-size: .88rem; }
-  .titleblock th, .titleblock td { border-top: 1.5px solid #4a5257; padding: .55rem 1.2rem; text-align: start; }
-  .titleblock th { font-weight: 400; color: var(--steel-lo); width: 46%; border-inline-end: 1.5px solid #4a5257; }
-  .titleblock td { font-weight: 500; }
+  .titleblock { margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1.5px solid #4a5257; }
+  .titleblock div { padding: .85rem 1.2rem; display: flex; flex-direction: column; gap: .1rem; }
+  .titleblock div + div { border-inline-start: 1.5px solid #4a5257; }
+  .titleblock dt { font-size: .8rem; color: var(--steel-lo); }
+  .titleblock dd { margin: 0; font-weight: 700; }
+  .titleblock .tb-fest { background: rgba(198, 150, 58, .12); }
+  .titleblock .tb-fest dd { color: var(--gold-hi); }
 
   /* Hidden starting state exists only when JS can play the sequence */
   :global(.js-motion) .hero:not(.is-done) .d { stroke-dasharray: 1; stroke-dashoffset: 1; }
@@ -147,10 +163,16 @@ const hatch = Array.from({ length: 26 }, (_, i) => 30 + i * 20);
   @media (max-width: 880px) {
     .hero__in { grid-template-columns: 1fr; }
     .hero__lead { font-size: var(--t-1); }
+    .titleblock { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .titleblock .tb-opt { display: none; }
+    .titleblock div:nth-child(3) { border-inline-start: 0; }
   }
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
+    .ruler { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .ruler span:nth-child(n + 5) { display: none; }
     .hero__cta .btn { flex: 1 1 100%; }
-    .titleblock th { width: 50%; }
+    .titleblock { grid-template-columns: 1fr 1fr; }
+    .titleblock .tb-fest { grid-column: 1 / -1; border-inline-start: 0; border-top: 1.5px solid #4a5257; }
   }
 </style>
 
