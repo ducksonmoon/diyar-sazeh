@@ -1,4 +1,5 @@
 ---
+import { asset } from "../lib";
 const ig = "https://www.instagram.com/diyarsazeh.construction";
 const items = [
   { img: "land-to-key.jpg", alt: "اسکلت LSF یک ویلا روی زمین", t: "زمینت رو بده، کلید بگیر", href: `${ig}/reel/DeHOVuGtqro/` },
@@ -20,7 +21,7 @@ const items = [
     {items.map((it) => (
       <li>
         <a href={it.href} target="_blank" rel="noopener">
-          <img src={`/img/${it.img}`} alt={it.alt} width="360" height="640" loading="lazy" />
+          <img src={asset(`img/${it.img}`)} alt={it.alt} width="360" height="640" loading="lazy" />
           <span>{it.t}</span>
         </a>
       </li>

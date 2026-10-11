@@ -14,7 +14,11 @@ npm run dev      # http://localhost:4321
 npm run build    # static site in dist/
 npm run preview
 ```
-Deploy `dist/` to any static host (GitHub Pages, Netlify, Vercel, ArvanCloud…). Set `site` in `astro.config.mjs` to the real domain.
+**GitHub Pages:** `.github/workflows/deploy.yml` builds and deploys on every push → https://ducksonmoon.github.io/diyar-sazeh/
+(Repo Settings → Pages → Source must be **GitHub Actions**.)
+
+**Other hosts / custom domain:** `SITE=https://example.com BASE=/ npm run build` and upload `dist/`.
+Public assets are referenced through `asset()` in `src/lib.ts` so they follow the base path.
 
 ## Design system ("galvanized")
 | Token | Value | Use |
