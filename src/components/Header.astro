@@ -1,5 +1,5 @@
 ---
-import { asset } from "../lib";
+import LogoMark from "./LogoMark.astro";
 const links = [
   { href: "#lsf", label: "چرا LSF" },
   { href: "#addition", label: "اضافه‌اشکوب" },
@@ -12,7 +12,7 @@ const links = [
 <header class="bar">
   <div class="wrap bar__in">
     <a class="logo" href="#top" aria-label="دیار سازه، بازگشت به بالا">
-      <img src={asset("img/logo.jpg")} alt="" width="40" height="40" />
+      <LogoMark size={26} class="logo__mark" />
       <span>دیار سازه</span>
     </a>
     <nav id="nav" class="bar__nav" aria-label="منوی اصلی">
@@ -31,8 +31,8 @@ const links = [
 <style>
   .bar { position: sticky; top: 0; z-index: 50; background: var(--graphite); color: var(--zinc); border-bottom: 1px solid #383f44; }
   .bar__in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; font: 600 1.3rem var(--f-display); }
-  .logo img { border-radius: 50%; }
+  .logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; font: 600 1.3rem var(--f-display); }
+  .logo :global(.logo__mark) { color: var(--gold); flex: none; }
   .bar__nav { display: flex; align-items: center; gap: 2rem; }
   .bar__nav ul { display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
   .bar__nav ul a { text-decoration: none; font-size: .92rem; color: #c9cdc8; padding-block: .3rem; border-bottom: 1.5px solid transparent; }

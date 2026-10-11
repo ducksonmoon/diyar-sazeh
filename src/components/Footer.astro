@@ -18,9 +18,24 @@ const year = new Date().toLocaleDateString("fa-IR", { year: "numeric" });
   .foot p { margin: 0; }
   .foot__name { color: var(--zinc); font-family: var(--f-display); }
   .call {
+    transition: opacity .25s, transform .25s, visibility .25s;
     position: fixed; bottom: 16px; inset-inline-start: 16px; z-index: 40; width: 54px; height: 54px; border-radius: 50%;
     display: none; place-items: center; background: var(--gold); color: var(--graphite); box-shadow: 0 6px 18px rgba(31, 36, 40, .35);
   }
   .call path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+  :global(.js-motion) .call:not(.show) { opacity: 0; visibility: hidden; transform: translateY(12px); }
   @media (max-width: 880px) { .call { display: grid; } }
 </style>
+
+<script>
+  // Show the floating call button only when no other call action is on screen
+  // (the hero has its own call button; the estimate section lists the number).
+  const call = document.querySelector<HTMLElement>(".call")!;
+  const zones = ["#top", "#estimate", ".foot"].map((s) => document.querySelector(s)).filter(Boolean) as Element[];
+  const visible = new Set<Element>();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+    call.classList.toggle("show", visible.size === 0);
+  });
+  zones.forEach((z) => io.observe(z));
+</script>

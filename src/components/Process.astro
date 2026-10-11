@@ -60,6 +60,15 @@ const fa = (n: number) => n.toLocaleString("fa-IR");
   const list = document.querySelector<HTMLElement>(".steps")!;
   const fill = list.querySelector<HTMLElement>(".steps__fill")!;
   const items = Array.from(list.querySelectorAll<HTMLLIElement>("li"));
+  const rail = list.querySelector<HTMLElement>(".steps__rail")!;
+
+  // End the rail at the centre of the last step's number, not at the bottom of its text
+  const fitRail = () => {
+    const last = items[items.length - 1];
+    rail.style.bottom = `${list.offsetHeight - last.offsetTop - 22}px`;
+  };
+  fitRail();
+  new ResizeObserver(fitRail).observe(list);
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     fill.style.transform = "none";

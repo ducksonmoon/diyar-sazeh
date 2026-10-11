@@ -14,7 +14,14 @@ const items = [
   <div class="wrap">
     <div class="head proj__head">
       <h2>از کارگاه‌های دیار سازه</h2>
-      <a class="btn btn--line" href={`${ig}/`} target="_blank" rel="noopener">همه پروژه‌ها در اینستاگرام</a>
+      <div class="proj__nav">
+        <button class="arrow" data-dir="prev" aria-label="پروژه‌های قبلی" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+        </button>
+        <button class="arrow" data-dir="next" aria-label="پروژه‌های بعدی">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
+        </button>
+      </div>
     </div>
   </div>
   <ul class="strip" tabindex="0" aria-label="ویدیوهای پروژه‌ها؛ برای دیدن بیشتر افقی اسکرول کنید">
@@ -27,6 +34,9 @@ const items = [
       </li>
     ))}
   </ul>
+  <div class="wrap proj__foot">
+    <a class="btn btn--line" href={`${ig}/`} target="_blank" rel="noopener">همه پروژه‌ها در اینستاگرام</a>
+  </div>
 </section>
 
 <style>
@@ -35,11 +45,45 @@ const items = [
     list-style: none; margin: 0; padding: 0 max(var(--gutter), calc((100% - var(--wrap)) / 2)) 1rem;
     display: grid; grid-auto-flow: column; grid-auto-columns: clamp(200px, 24vw, 280px); gap: 1rem;
     overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(var(--gutter), calc((100% - var(--wrap)) / 2));
-    scrollbar-color: var(--gold) #383f44;
+    scrollbar-width: none;
   }
+  .strip::-webkit-scrollbar { display: none; }
+  .proj__nav { display: flex; gap: .6rem; }
+  .arrow {
+    width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer;
+    background: transparent; color: var(--zinc); border: 1.5px solid #6b7378; border-radius: 50%;
+    transition: background-color .18s, color .18s, border-color .18s, opacity .18s, transform .18s;
+  }
+  .arrow:hover:not(:disabled) { background: var(--zinc); color: var(--graphite); border-color: var(--zinc); }
+  .arrow:active:not(:disabled) { transform: translateY(2px); }
+  .arrow:disabled { opacity: .3; cursor: default; }
+  .arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .proj__foot { margin-top: 2rem; }
   .strip li { scroll-snap-align: start; }
   .strip a { display: block; text-decoration: none; }
   .strip img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 4px; background: var(--graphite-2); }
   .strip span { display: block; margin-top: .6rem; font-size: .92rem; color: #c3c8c3; }
   .strip a:hover span { color: var(--gold-hi); }
 </style>
+
+<script>
+  const strip = document.querySelector<HTMLElement>(".strip")!;
+  const prev = document.querySelector<HTMLButtonElement>('.arrow[data-dir="prev"]')!;
+  const next = document.querySelector<HTMLButtonElement>('.arrow[data-dir="next"]')!;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // RTL: scrollLeft is 0 at the start and grows negative toward the end
+  const update = () => {
+    const max = strip.scrollWidth - strip.clientWidth;
+    const pos = Math.abs(strip.scrollLeft);
+    prev.disabled = pos <= 2;
+    next.disabled = pos >= max - 2;
+  };
+  const step = () => (strip.querySelector("li")?.getBoundingClientRect().width ?? 280) + 16;
+
+  next.addEventListener("click", () => strip.scrollBy({ left: -step(), behavior: reduce ? "auto" : "smooth" }));
+  prev.addEventListener("click", () => strip.scrollBy({ left: step(), behavior: reduce ? "auto" : "smooth" }));
+  strip.addEventListener("scroll", update, { passive: true });
+  new ResizeObserver(update).observe(strip);
+  update();
+</script>
