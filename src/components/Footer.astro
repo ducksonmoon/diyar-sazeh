@@ -1,4 +1,5 @@
 ---
+import CircleCredit from "./CircleCredit.astro";
 const year = new Date().toLocaleDateString("fa-IR", { year: "numeric" });
 ---
 <footer class="foot">
@@ -6,6 +7,7 @@ const year = new Date().toLocaleDateString("fa-IR", { year: "numeric" });
     <p class="foot__name">دیار سازه، شرکت فرایند نوین ساختمانی</p>
     <p>پیمانکار رسمی ساختمان؛ تولید و اجرای پروژه با سازه <span dir="ltr">LSF</span> در ساری و مازندران.</p>
     <p>© {year}</p>
+    <CircleCredit variant="footer-dark" />
   </div>
 </footer>
 <a class="call" href="tel:+989353066900" aria-label="تماس تلفنی با دیار سازه">
@@ -14,7 +16,7 @@ const year = new Date().toLocaleDateString("fa-IR", { year: "numeric" });
 
 <style>
   .foot { background: #171b1e; color: var(--steel-lo); font-size: .85rem; padding-block: 2rem 5rem; }
-  .foot__in { display: flex; flex-wrap: wrap; gap: .4rem 2rem; justify-content: space-between; }
+  .foot__in { display: flex; flex-wrap: wrap; gap: .4rem 2rem; justify-content: space-between; align-items: center; }
   .foot p { margin: 0; }
   .foot__name { color: var(--zinc); font-family: var(--f-display); }
   .call {

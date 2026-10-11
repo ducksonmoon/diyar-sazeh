@@ -1,0 +1,45 @@
+---
+// "Designed & developed by Circle" credit, per the Circle (دایره) design system's circle-credit component.
+interface Props { variant?: "footer-dark" | "footer-light" }
+const { variant = "footer-dark" } = Astro.props;
+const markFill = variant === "footer-light" ? "#123c3d" : "#f4f1e8";
+const mark =
+  "M 130 10 L 109 30 C 155 31 188 64 188 110 C 188 158 151 194 104 194 C 54 194 14 156 14 109 C 14 62 48 24 92 16 C 107 13 119 10 130 10 Z M 79 57 C 58 53 43 69 38 88 C 33 108 44 119 57 112 L 94 82 C 104 70 97 58 79 57 Z M 118 80 C 143 78 168 103 165 129 C 163 154 144 173 119 172 C 97 172 75 162 76 140 C 77 126 91 105 104 88 C 109 83 112 80 118 80 Z";
+---
+<a
+  href="https://circlegroup.ir"
+  target="_blank"
+  rel="noopener noreferrer"
+  dir="rtl"
+  lang="fa"
+  class={`circle-credit circle-credit--${variant}`}
+  aria-label="طراحی و توسعه توسط دایره — باز کردن وب‌سایت دایره"
+>
+  <span class="circle-credit__caption">طراحی و توسعه توسط</span>
+  <span class="circle-credit__signature">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="20" height="20" fill={markFill} aria-hidden="true" focusable="false">
+      <path d={mark} fill-rule="evenodd" />
+    </svg>
+    <strong>دایره</strong>
+  </span>
+</a>
+
+<style>
+  .circle-credit {
+    --circle-petrol: #123c3d;
+    --circle-paper: #f4f1e8;
+    --circle-muted: #526763;
+    display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    font-family: Vazirmatn, Tahoma, Arial, sans-serif; font-size: 12px; line-height: 1.6;
+    text-decoration: none; transition: color .16s ease-out, border-color .16s ease-out;
+  }
+  .circle-credit--footer-light { color: var(--circle-muted); }
+  .circle-credit--footer-light .circle-credit__signature { color: var(--circle-petrol); }
+  .circle-credit--footer-dark { color: var(--circle-paper); }
+  .circle-credit__signature { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .circle-credit strong { font-weight: 800; }
+  .circle-credit:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+  .circle-credit:focus-visible { outline: 2px solid var(--circle-petrol); outline-offset: 4px; border-radius: 4px; }
+  .circle-credit--footer-dark:focus-visible { outline-color: var(--circle-paper); }
+  @media (prefers-reduced-motion: reduce) { .circle-credit { transition: none; } }
+</style>
