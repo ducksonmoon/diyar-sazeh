@@ -1,0 +1,84 @@
+---
+const faqs = [
+  {
+    q: "سازه LSF مورد تأیید نظام مهندسی هست؟",
+    a: "بله. LSF یک سیستم ساختمانی شناخته‌شده‌ست و با رعایت ضوابط فنی و مقررات قابل اجراست. ولی تأیید هر پروژه فقط به نوع سازه بستگی نداره: طراحی و محاسبات دقیق، رعایت استانداردها، اجرای اصولی اتصالات و اجرا مطابق نقشه‌های تأییدشده، همه نقش دارن.",
+  },
+  {
+    q: "ساخت با LSF چقدر طول می‌کشه؟",
+    a: "از اجرای سازه تا تحویل خانه، حدود دو ماه. زمان دقیق به متراژ، طراحی و شرایط زمین بستگی داره.",
+  },
+  {
+    q: "هزینه ساخت چقدره؟",
+    a: "به متراژ، محدوده زمین، سبک طراحی و سطح تمام‌کاری بستگی داره. متراژ و محدوده زمین و بودجه‌تون رو در فرم برآورد بفرستید تا برآورد اولیه بگیرید.",
+  },
+  {
+    q: "می‌شه روی ساختمان قدیمی بدون تخریب سقف طبقه اضافه کرد؟",
+    a: "در بیشتر موارد بله. وزن یک طبقه LSF کسری از طبقه سنتیه و بعد از بازدید ستون‌ها و فونداسیون، بار روی نقاط باربر اصلی طراحی می‌شه. امکان‌سنجی هر ساختمان با بازدید و محاسبه مشخص می‌شه.",
+  },
+  {
+    q: "شرایط جشنواره خانه رویایی چیه؟",
+    a: "تا ۱۵٪ تخفیف برای ساخت خانه، همراه با شرایط اقساط و متناسب با بودجه شما. برای جزئیات تماس بگیرید.",
+  },
+  {
+    q: "فقط در ساری کار می‌کنید؟",
+    a: "دفتر ما در ساری، مهدشته و در سراسر مازندران پروژه اجرا می‌کنیم. برای شهرهای دیگه تماس بگیرید.",
+  },
+];
+---
+<section id="faq" class="block">
+  <div class="wrap faq">
+    <h2>سوال‌های پرتکرار</h2>
+    <div class="faq__list">
+      {faqs.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <div class="faq__a"><p class="muted">{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .faq__list { border-top: 1.5px solid var(--graphite); }
+  details { border-bottom: 1.5px solid #b6bbb5; }
+  summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
+    padding: 1.15rem 0; font: 500 var(--t-1) var(--f-display);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: ""; flex: none; width: 14px; height: 14px;
+    background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat, linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+    transition: transform .3s;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+  .faq__a { overflow: hidden; }
+  .faq__a p { margin: 0 0 1.3rem; max-width: 40em; }
+  @media (max-width: 880px) { .faq { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  import { animate } from "motion";
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLDetailsElement>(".faq details").forEach((d) => {
+    const summary = d.querySelector("summary")!;
+    const body = d.querySelector<HTMLElement>(".faq__a")!;
+    summary.addEventListener("click", async (e) => {
+      if (reduce) return;
+      e.preventDefault();
+      if (d.open) {
+        await animate(body, { height: [body.offsetHeight, 0], opacity: [1, 0] }, { duration: 0.28, ease: "easeInOut" });
+        d.open = false;
+        body.style.height = body.style.opacity = "";
+      } else {
+        d.open = true;
+        await animate(body, { height: [0, body.scrollHeight], opacity: [0, 1] }, { duration: 0.3, ease: "easeInOut" });
+        body.style.height = "";
+      }
+    });
+  });
+</script>

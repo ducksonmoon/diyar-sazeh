@@ -1,0 +1,40 @@
+---
+const styles = [
+  { t: "مدرن مینیمال", d: "خطوط صاف، شیشه‌های بزرگ و سقف تخت.", p: "M10 112V46h92v66M102 74h50v38M10 46h142M28 64h34v28H28zM74 64h16v48" },
+  { t: "شیروانی", d: "بام شیب‌دار، سازگار با بارش و جنگل شمال.", p: "M20 112V58L80 16l60 42v54M20 112h120M66 112V80h28v32M34 66h18v18H34zM108 66h18v18h-18zM80 16v-0" },
+  { t: "مراکشی", d: "قوس‌ها، جزئیات تزئینی و حس گرم.", p: "M26 112V48c0-18 24-28 54-28s54 10 54 28v64M14 112h132M62 112V76c0-10 8-17 18-17s18 7 18 17v36M18 48h124M38 70v24M122 70v24" },
+  { t: "کلاسیک", d: "تقارن، ستون و نمای باشکوه.", p: "M14 112V44h132v68M14 44l14-18h104l14 18M30 54v58M130 54v58M50 60h20v26H50zM90 60h20v26H90zM70 112V92h20v20M8 112h144" },
+];
+---
+<section id="styles" class="block">
+  <div class="wrap">
+    <div class="head">
+      <h2>اگه ویلا بسازی، کدوم سبک رو می‌سازی؟</h2>
+      <p class="muted measure"><span dir="ltr">LSF</span> سبک معماری رو محدود نمی‌کنه؛ نما رو هر طور بخواید اجرا می‌کنیم.</p>
+    </div>
+    <ul class="elev">
+      {styles.map((s) => (
+        <li>
+          <svg viewBox="0 0 160 120" aria-hidden="true"><path d={s.p} /></svg>
+          <h3>{s.t}</h3>
+          <p class="muted">{s.d}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .elev { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1.5px solid #b6bbb5; }
+  .elev li { padding: 1.8rem 1.4rem 1.6rem; }
+  .elev li + li { border-inline-start: 1.5px solid #b6bbb5; }
+  .elev svg { width: 100%; max-width: 180px; height: auto; margin-bottom: 1.2rem; }
+  .elev path { fill: none; stroke: var(--graphite); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .elev h3 { margin-bottom: .2rem; }
+  .elev p { margin: 0; font-size: .92rem; }
+  @media (max-width: 880px) {
+    .elev { grid-template-columns: 1fr 1fr; }
+    .elev li:nth-child(3) { border-inline-start: 0; }
+    .elev li:nth-child(n + 3) { border-top: 1.5px solid #b6bbb5; }
+  }
+</style>

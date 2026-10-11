@@ -1,0 +1,44 @@
+---
+const ig = "https://www.instagram.com/diyarsazeh.construction";
+const items = [
+  { img: "land-to-key.jpg", alt: "اسکلت LSF یک ویلا روی زمین", t: "زمینت رو بده، کلید بگیر", href: `${ig}/reel/DeHOVuGtqro/` },
+  { img: "mazandaran.jpg", alt: "اسکلت فولادی سبک یک ویلا در مازندران هنگام غروب", t: "ساخت ویلا در مازندران", href: `${ig}/reel/Ddv_jGHtafM/` },
+  { img: "dream-house.jpg", alt: "اسکلت LSF در حال اجرا میان درختان", t: "جشنواره خانه رویایی", href: `${ig}/reel/DdWZEpSN8FU/` },
+  { img: "mistakes.jpg", alt: "اسکلت فولادی سبک یک خانه دوطبقه با سقف شیب‌دار", t: "اشتباه‌های پرهزینه در ساخت", href: `${ig}/reel/DdHEo-YNdft/` },
+  { img: "why-us.jpg", alt: "خرپای سقف از پروفیل فولادی", t: "چرا مشتری‌ها راضی‌ان", href: `${ig}/reel/DdPA1cBSQmv/` },
+  { img: "news.jpg", alt: "اتصالات و پروفیل‌های فولادی سازه LSF", t: "ساخت با جدیدترین تکنولوژی", href: `${ig}/reel/DdBsyv5N00k/` },
+];
+---
+<section id="projects" class="block block--dark">
+  <div class="wrap">
+    <div class="head proj__head">
+      <h2>از کارگاه‌های دیار سازه</h2>
+      <a class="btn btn--line" href={`${ig}/`} target="_blank" rel="noopener">همه پروژه‌ها در اینستاگرام</a>
+    </div>
+  </div>
+  <ul class="strip" tabindex="0" aria-label="ویدیوهای پروژه‌ها؛ برای دیدن بیشتر افقی اسکرول کنید">
+    {items.map((it) => (
+      <li>
+        <a href={it.href} target="_blank" rel="noopener">
+          <img src={`/img/${it.img}`} alt={it.alt} width="360" height="640" loading="lazy" />
+          <span>{it.t}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .proj__head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; }
+  .strip {
+    list-style: none; margin: 0; padding: 0 max(var(--gutter), calc((100% - var(--wrap)) / 2)) 1rem;
+    display: grid; grid-auto-flow: column; grid-auto-columns: clamp(200px, 24vw, 280px); gap: 1rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(var(--gutter), calc((100% - var(--wrap)) / 2));
+    scrollbar-color: var(--gold) #383f44;
+  }
+  .strip li { scroll-snap-align: start; }
+  .strip a { display: block; text-decoration: none; }
+  .strip img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 4px; background: var(--graphite-2); }
+  .strip span { display: block; margin-top: .6rem; font-size: .92rem; color: #c3c8c3; }
+  .strip a:hover span { color: var(--gold-hi); }
+</style>

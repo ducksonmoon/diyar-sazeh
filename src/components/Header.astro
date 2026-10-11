@@ -1,0 +1,69 @@
+---
+const links = [
+  { href: "#lsf", label: "چرا LSF" },
+  { href: "#addition", label: "اضافه‌اشکوب" },
+  { href: "#services", label: "خدمات" },
+  { href: "#process", label: "مراحل ساخت" },
+  { href: "#projects", label: "پروژه‌ها" },
+  { href: "#faq", label: "سوالات" },
+];
+---
+<header class="bar">
+  <div class="wrap bar__in">
+    <a class="logo" href="#top" aria-label="دیار سازه، بازگشت به بالا">
+      <img src="/img/logo.jpg" alt="" width="40" height="40" />
+      <span>دیار سازه</span>
+    </a>
+    <nav id="nav" class="bar__nav" aria-label="منوی اصلی">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+      <a class="btn btn--gold bar__cta" href="#estimate">برآورد هزینه</a>
+    </nav>
+    <button class="bar__toggle" aria-expanded="false" aria-controls="nav">
+      <span class="sr-only">منو</span>
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" /></svg>
+    </button>
+  </div>
+</header>
+
+<style>
+  .bar { position: sticky; top: 0; z-index: 50; background: var(--graphite); color: var(--zinc); border-bottom: 1px solid #383f44; }
+  .bar__in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; font: 600 1.3rem var(--f-display); }
+  .logo img { border-radius: 50%; }
+  .bar__nav { display: flex; align-items: center; gap: 2rem; }
+  .bar__nav ul { display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
+  .bar__nav ul a { text-decoration: none; font-size: .92rem; color: #c9cdc8; padding-block: .3rem; border-bottom: 1.5px solid transparent; }
+  .bar__nav ul a:hover { color: #fff; border-color: var(--gold); }
+  .bar__cta { min-height: 40px; padding-block: .4rem; font-size: .92rem; }
+  .bar__toggle { display: none; background: none; border: 0; color: inherit; padding: 8px; cursor: pointer; }
+  .bar__toggle path { stroke: currentColor; stroke-width: 2; stroke-linecap: round; transition: d .3s; }
+  .bar__toggle[aria-expanded="true"] path { d: path("M5 5L19 19M12 12h0M5 19L19 5"); }
+
+  @media (max-width: 960px) {
+    .bar__toggle { display: block; }
+    .bar__nav {
+      position: absolute; top: 64px; inset-inline: 0; flex-direction: column; align-items: stretch; gap: 1rem;
+      background: var(--graphite); padding: .5rem var(--gutter) 1.4rem; border-bottom: 1px solid #383f44;
+      display: none;
+    }
+    .bar__nav.open { display: flex; }
+    .bar__nav ul { flex-direction: column; gap: 0; }
+    .bar__nav ul a { display: block; padding: .85rem 0; border-bottom: 1px solid #383f44; }
+  }
+</style>
+
+<script>
+  import { animate } from "motion";
+  const toggle = document.querySelector<HTMLButtonElement>(".bar__toggle")!;
+  const nav = document.getElementById("nav")!;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute("aria-expanded", String(open));
+    nav.classList.toggle("open", open);
+    if (open && !reduce) animate(nav, { opacity: [0, 1], y: [-8, 0] }, { duration: 0.25, ease: [0.22, 1, 0.36, 1] });
+  };
+  toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+  nav.addEventListener("click", (e) => { if ((e.target as Element).closest("a")) setOpen(false); });
+</script>

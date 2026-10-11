@@ -1,0 +1,49 @@
+<section id="addition" class="block block--dark">
+  <div class="wrap add">
+    <figure class="add__photo">
+      <img src="/img/yard-crane.jpg" alt="تحویل پروفیل‌های فولادی گالوانیزه دیار سازه با جرثقیل در کارگاه" width="900" height="960" loading="lazy" />
+      <figcaption class="muted">پروفیل‌های گالوانیزه، آماده ارسال به پروژه</figcaption>
+    </figure>
+    <div>
+      <h2>روی ساختمان قدیمی، بدون تخریب سقف، طبقه اضافه کنید</h2>
+      <p class="muted measure add__lead">
+        خونه‌تون کوچیکه و زمینی برای ساخت ندارید؟ یا می‌خواین روف‌گاردن بسازید؟ <span dir="ltr">LSF</span> سبک‌ترین گزینه برای
+        اضافه‌اشکوبه، بدون اینکه بار سنگینی به ستون‌های قدیمی تحمیل کنه.
+      </p>
+      <div class="add__points">
+        <section>
+          <h3>وزن کم، بار مرده کم</h3>
+          <p class="muted">
+            طبقه سنتی با آجر، بلوک سیمانی، تیرآهن و بتن ساخته می‌شه و بار زیادی به ستون‌ها و پی قدیمی وارد می‌کنه؛
+            ممکنه باعث نشست یا ترک بشه. وزن یک طبقه <span dir="ltr">LSF</span> کسری از اون وزنه.
+          </p>
+        </section>
+        <section>
+          <h3>بار، دقیقاً روی ستون‌های اصلی</h3>
+          <p class="muted">
+            اول ستون‌ها و فونداسیون موجود رو بازدید می‌کنیم. چون وزن هر پروفیل مشخصه، نقشه طوری طراحی می‌شه که بار مستقیم روی
+            نقاط باربر اصلی بشینه، نه روی بخش‌های ضعیف سقف قبلی.
+          </p>
+        </section>
+      </div>
+      <a class="btn btn--gold" href="#estimate">امکان اضافه‌اشکوب را بررسی کنید</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .add { display: grid; grid-template-columns: 0.85fr 1fr; gap: clamp(2rem, 6vw, 5.5rem); align-items: center; }
+  .add__photo { margin: 0; }
+  .add__photo img { width: 100%; height: auto; border-radius: 4px; }
+  .add__photo figcaption { font-size: .85rem; margin-top: .6rem; }
+  .add__lead { margin: 1.2rem 0 2rem; }
+  .add__points { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; margin-bottom: 2.2rem; }
+  .add__points section { border-top: 3px solid var(--gold); padding-top: 1rem; }
+  .add__points h3 { margin-bottom: .5rem; }
+  .add__points p { font-size: .95rem; margin: 0; }
+  @media (max-width: 880px) {
+    .add { grid-template-columns: 1fr; }
+    .add__photo { order: 2; }
+  }
+  @media (max-width: 560px) { .add__points { grid-template-columns: 1fr; } }
+</style>

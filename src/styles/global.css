@@ -1,0 +1,91 @@
+:root {
+  --zinc: #e3e5e1;
+  --zinc-deep: #cdd1cc;
+  --zinc-hi: #f1f2ef;
+  --graphite: #1f2428;
+  --graphite-2: #2a3035;
+  --steel: #5f676d;
+  --steel-lo: #8b9398;
+  --gold: #c6963a;
+  --gold-hi: #e2b960;
+  --red: #c2412d;
+
+  --f-display: "Noto Kufi Arabic", "Readex Pro", Tahoma, sans-serif;
+  --f-body: "Readex Pro", Tahoma, sans-serif;
+
+  /* Type scale: 1.25 (major third) on a 17px base */
+  --t-0: 0.8rem;
+  --t-1: 1rem;
+  --t-2: 1.25rem;
+  --t-3: 1.563rem;
+  --t-4: clamp(1.75rem, 3.4vw, 2.441rem);
+  --t-5: clamp(2.4rem, 6.2vw, 4.4rem);
+
+  --wrap: 1180px;
+  --gutter: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; font-size: 17px; }
+body {
+  margin: 0;
+  background: var(--zinc);
+  color: var(--graphite);
+  font-family: var(--f-body);
+  font-weight: 300;
+  line-height: 1.95;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.3; margin: 0; }
+h2 { font-size: var(--t-4); }
+h3 { font-size: var(--t-2); font-weight: 500; }
+p { margin: 0 0 1em; }
+b, strong { font-weight: 500; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.wrap { width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; }
+.measure { max-width: 38em; }
+.muted { color: var(--steel); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; inset-inline-start: -9999px; }
+.skip:focus { inset-inline-start: 16px; top: 12px; z-index: 100; background: var(--gold); color: var(--graphite); padding: 6px 14px; border-radius: 6px; }
+
+.block { padding-block: clamp(4rem, 9vw, 7.5rem); }
+.block--dark { background: var(--graphite); color: var(--zinc); }
+.block--dark .muted { color: var(--steel-lo); }
+.head { margin-bottom: 2.6rem; }
+.head p { margin-top: .8rem; }
+
+/* Buttons: a flat steel plate with a stamped edge, gold only for the primary action */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  min-height: 48px; padding: .6rem 1.4rem;
+  font: 500 var(--t-1) / 1 var(--f-body);
+  border-radius: 6px; border: 1.5px solid currentColor;
+  text-decoration: none; cursor: pointer; background: transparent; color: inherit;
+  transition: transform .18s, background-color .18s, color .18s;
+}
+.btn:active { transform: translateY(2px); }
+.btn--gold { background: var(--gold); border-color: var(--gold); color: var(--graphite); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .18); }
+.btn--gold:hover { background: var(--gold-hi); border-color: var(--gold-hi); }
+.btn--line:hover { background: var(--graphite); color: var(--zinc); border-color: var(--graphite); }
+.block--dark .btn--line:hover, .hero .btn--line:hover { background: var(--zinc); color: var(--graphite); border-color: var(--zinc); }
+
+/* The stud rail: a C-stud web with oval service holes, used as the one recurring structural device */
+.rail {
+  height: 22px;
+  background:
+    radial-gradient(ellipse 13px 5px at center, var(--zinc) 98%, transparent 100%) 0 50% / 64px 22px repeat-x,
+    linear-gradient(var(--zinc-deep), var(--zinc-deep));
+  border-block: 2px solid #b6bbb5;
+}
+.rail--dark {
+  background:
+    radial-gradient(ellipse 13px 5px at center, var(--graphite) 98%, transparent 100%) 0 50% / 64px 22px repeat-x,
+    linear-gradient(#3a4146, #3a4146);
+  border-color: #4a5257;
+}

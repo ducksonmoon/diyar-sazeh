@@ -1,0 +1,93 @@
+<section id="estimate" class="block block--dark">
+  <div class="wrap est">
+    <div>
+      <h2>زمین دارید؟ ببینید ساختش چقدر هزینه داره.</h2>
+      <p class="muted measure est__lead">
+        متراژ و محدوده زمین و بودجه‌تون رو بفرستید. شرایط پروژه رو بررسی می‌کنیم و برآورد اولیه رو بهتون می‌گیم.
+      </p>
+      <dl class="contact">
+        <div><dt>تلفن مشاوره و همکاری</dt><dd><a href="tel:+989353066900" dir="ltr">0935 306 6900</a></dd></div>
+        <div><dt>دفتر</dt><dd>ساری، مهدشت</dd></div>
+        <div><dt>اینستاگرام</dt><dd><a href="https://www.instagram.com/diyarsazeh.construction/" target="_blank" rel="noopener" dir="ltr">@diyarsazeh.construction</a></dd></div>
+      </dl>
+    </div>
+
+    <form class="form" id="estimateForm" novalidate>
+      <label>نام<input name="name" required autocomplete="name" /></label>
+      <label>شماره موبایل<input name="phone" required inputmode="tel" autocomplete="tel" dir="ltr" /></label>
+      <div class="form__row">
+        <label>متراژ زمین (متر مربع)<input name="land" inputmode="numeric" /></label>
+        <label>متراژ بنا (متر مربع)<input name="area" inputmode="numeric" /></label>
+      </div>
+      <label>شهر یا محدوده<input name="city" /></label>
+      <label>نوع پروژه
+        <select name="type">
+          <option>ساخت ویلا</option>
+          <option>ساخت خانه</option>
+          <option>اضافه‌اشکوب یا روف‌گاردن</option>
+          <option>نوسازی و بازسازی</option>
+          <option>سایر</option>
+        </select>
+      </label>
+      <label>بودجه تقریبی (اختیاری)<input name="budget" /></label>
+      <p class="form__err" role="alert" hidden>نام و شماره موبایل را وارد کنید تا بتوانیم با شما تماس بگیریم.</p>
+      <button class="btn btn--gold" type="submit">ارسال درخواست با پیامک</button>
+      <p class="form__note muted">متن درخواست در برنامه پیامک گوشی شما آماده می‌شود؛ فقط کافی است ارسال را بزنید.</p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .est { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .est__lead { margin: 1.2rem 0 2.4rem; }
+  .contact { margin: 0; }
+  .contact div { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .9rem 0; border-top: 1.5px solid #383f44; }
+  .contact dt { color: var(--steel-lo); }
+  .contact dd { margin: 0; font-weight: 500; }
+  .contact a { text-decoration: none; }
+  .contact a:hover { color: var(--gold-hi); }
+
+  .form { display: grid; gap: 1.3rem; border: 1.5px solid #4a5257; padding: clamp(1.2rem, 3vw, 2rem); }
+  .form label { display: grid; gap: .25rem; font-size: .88rem; color: var(--steel-lo); }
+  .form input, .form select {
+    font: 400 var(--t-1) var(--f-body); color: var(--zinc); background: transparent;
+    border: 0; border-bottom: 1.5px solid #6b7378; border-radius: 0; padding: .45rem 0; width: 100%;
+  }
+  .form select option { color: var(--graphite); }
+  .form input:focus, .form select:focus { outline: none; border-bottom-color: var(--gold); }
+  .form input[aria-invalid="true"] { border-bottom-color: var(--red); }
+  .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+  .form__err { margin: 0; color: #f0a191; font-size: .9rem; }
+  .form__note { margin: 0; font-size: .8rem; }
+  @media (max-width: 880px) { .est { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .form__row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const PHONE = "09353066900";
+  const form = document.getElementById("estimateForm") as HTMLFormElement;
+  const err = form.querySelector<HTMLElement>(".form__err")!;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    const missing = (["name", "phone"] as const).filter((k) => !d[k].trim());
+    form.querySelectorAll("input").forEach((i) => i.removeAttribute("aria-invalid"));
+    missing.forEach((k) => form.elements.namedItem(k) instanceof HTMLInputElement && (form.elements.namedItem(k) as HTMLInputElement).setAttribute("aria-invalid", "true"));
+    err.hidden = missing.length === 0;
+    if (missing.length) return;
+
+    const lines = [
+      "درخواست برآورد هزینه ساخت",
+      `نام: ${d.name}`,
+      `موبایل: ${d.phone}`,
+      `نوع پروژه: ${d.type}`,
+      d.land && `متراژ زمین: ${d.land}`,
+      d.area && `متراژ بنا: ${d.area}`,
+      d.city && `محدوده: ${d.city}`,
+      d.budget && `بودجه: ${d.budget}`,
+    ].filter(Boolean);
+    const sep = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? "&" : "?";
+    window.location.href = `sms:${PHONE}${sep}body=${encodeURIComponent(lines.join("\n"))}`;
+  });
+</script>

@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  name: "دیار سازه",
+  alternateName: "Diar Sazeh",
+  description: "پیمانکار رسمی ساختمان؛ تولید و اجرای سازه LSF، ساخت، نوسازی، بازسازی و اضافه‌اشکوب",
+  telephone: "+989353066900",
+  address: { "@type": "PostalAddress", addressLocality: "ساری، مهدشت", addressRegion: "مازندران", addressCountry: "IR" },
+  sameAs: ["https://www.instagram.com/diyarsazeh.construction/"],
+};
+---
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1f2428" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/img/yard-crane.jpg" />
+    <meta property="og:locale" content="fa_IR" />
+    <link rel="icon" href="/img/logo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@500;600;800&display=swap" rel="stylesheet" />
+    <script is:inline>document.documentElement.classList.add("js-motion");</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">رفتن به محتوا</a>
+    <slot />
+  </body>
+</html>

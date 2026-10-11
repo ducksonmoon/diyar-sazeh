@@ -1,0 +1,89 @@
+---
+const heavy = [
+  { name: "سقف بتنی", h: 26, k: "concrete" },
+  { name: "تیرآهن", h: 14, k: "beam" },
+  { name: "دیوار آجری و بلوک سیمانی", h: 54, k: "brick" },
+];
+const light = [
+  { name: "پنل سبک", h: 9, k: "panel" },
+  { name: "عایق پشم سنگ", h: 8, k: "wool" },
+  { name: "پروفیل فولادی گالوانیزه", h: 10, k: "steel" },
+];
+const facts = [
+  { t: "سریع", d: "از اجرای سازه تا تحویل خانه، حدود دو ماه. مقاطع در کارخانه آماده می‌شن و در کارگاه فقط مونتاژ می‌شن." },
+  { t: "مقاوم در اقلیم شمال", d: "فولاد گالوانیزه در برابر رطوبت و زنگ‌زدگی دوام می‌آره." },
+  { t: "قابل تأیید", d: "با طراحی و محاسبات دقیق و اجرای مطابق نقشه‌های تأییدشده، مطابق ضوابط نظام مهندسی." },
+];
+---
+<section id="lsf" class="block">
+  <div class="wrap why">
+    <div class="why__text">
+      <h2>سازه‌ای که وزن نداره،<br />ولی کم نمی‌آره</h2>
+      <p class="muted measure">
+        <span dir="ltr">LSF</span> سیستم سازه‌ای سبک و مقاوم از مقاطع فولادی گالوانیزه‌ست. اسکلت با پروفیل‌های سبک اما با مقاومت
+        کششی بالا ساخته می‌شه و دیوارها با پنل‌های سبک و عایق پوشیده می‌شن.
+      </p>
+      <dl class="facts">
+        {facts.map((f) => <div><dt>{f.t}</dt><dd>{f.d}</dd></div>)}
+      </dl>
+    </div>
+
+    <figure class="scale">
+      <div class="scale__cols">
+        <div class="col">
+          <div class="stack">
+            {heavy.map((l) => <div class={`layer ${l.k}`} style={`height:${l.h * 3.2}px`}><span>{l.name}</span></div>)}
+          </div>
+          <p class="col__label">یک طبقه سنتی</p>
+        </div>
+        <div class="col">
+          <div class="stack">
+            {light.map((l) => <div class={`layer ${l.k}`} style={`height:${l.h * 3.2}px`} title={l.name} />)}
+          </div>
+          <p class="col__label">یک طبقه <span dir="ltr">LSF</span></p>
+          <ul class="legend">
+            {light.map((l) => <li><i class={l.k} />{l.name}</li>)}
+          </ul>
+        </div>
+      </div>
+      <figcaption class="muted">
+        بار مرده یک طبقه <span dir="ltr">LSF</span> کسری از یک طبقه سنتیه. نمایش نمادینه؛ وزن دقیق به طراحی هر پروژه بستگی داره.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .why { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: end; }
+  .why h2 { margin-bottom: 1.2rem; }
+  .facts { margin: 2.2rem 0 0; display: grid; gap: 1.2rem; }
+  .facts div { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding-top: 1.1rem; border-top: 1.5px solid #b6bbb5; }
+  .facts dt { font: 500 var(--t-1) var(--f-display); }
+  .facts dd { margin: 0; color: var(--steel); }
+
+  .scale { margin: 0; }
+  .scale__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+  .stack { display: flex; flex-direction: column; justify-content: flex-end; height: 310px; border-bottom: 3px solid var(--graphite); margin-inline: -.75rem; padding-inline: .75rem; }
+  .layer { position: relative; border: 1.5px solid var(--graphite); margin-top: -1.5px; }
+  .layer span { position: absolute; inset-inline-start: .6rem; top: 50%; transform: translateY(-50%); font-size: .78rem; font-weight: 400; background: var(--zinc); padding: 0 .35rem; line-height: 1.6; white-space: nowrap; }
+  .concrete { background: repeating-radial-gradient(circle at 30% 40%, #9aa09b 0 1.5px, transparent 2px 7px), #c4c8c3; }
+  .beam { background: var(--graphite); }
+  .beam span { background: var(--graphite); color: var(--zinc); }
+  .brick { background: repeating-linear-gradient(0deg, transparent 0 15px, #8d938e 15px 16.5px), repeating-linear-gradient(90deg, transparent 0 34px, #8d938e 34px 35.5px), #bfc3be; }
+  .panel { background: var(--zinc-hi); }
+  .wool { background: repeating-linear-gradient(-45deg, #e8d29c 0 3px, #f3e6c4 3px 6px); }
+  .steel { background: linear-gradient(#e9ebe8, #aeb3ae); }
+  .legend { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .78rem; display: grid; gap: .25rem; }
+  .legend li { display: flex; align-items: center; gap: .45rem; }
+  .legend i { width: 14px; height: 10px; border: 1.5px solid var(--graphite); flex: none; }
+  .col__label { margin: .7rem 0 0; font: 500 var(--t-1) var(--f-display); text-align: center; }
+  .scale figcaption { margin-top: 1.4rem; font-size: .85rem; }
+
+  @media (max-width: 880px) {
+    .why { grid-template-columns: 1fr; }
+    .facts div { grid-template-columns: 1fr; gap: .2rem; }
+  }
+  @media (max-width: 480px) {
+    .layer span { font-size: .7rem; }
+  }
+</style>

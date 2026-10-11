@@ -1,0 +1,188 @@
+---
+// Elevation drawing of a light-steel-frame house, generated so the geometry stays consistent.
+const G = 362; // bottom track
+const T = 200; // top track
+const studXs = Array.from({ length: 11 }, (_, i) => 80 + i * 40);
+const windows = [
+  { x: 120, w: 80, y1: 240, y2: 300 },
+  { x: 360, w: 80, y1: 240, y2: 300 },
+];
+const door = { x: 240, w: 80, y1: 262 };
+
+// Full-height studs skip the cripple positions inside openings
+const cripples = [
+  { x: 160, segs: [[T, 240], [300, G]] },
+  { x: 400, segs: [[T, 240], [300, G]] },
+  { x: 280, segs: [[T, door.y1]] },
+];
+const crippleXs = cripples.map((c) => c.x);
+const studs = studXs.filter((x) => !crippleXs.includes(x)).map((x) => [x, T, x, G]);
+const crippleLines = cripples.flatMap((c) => c.segs.map(([a, b]) => [c.x, a, c.x, b]));
+
+// Gable truss: eaves at (60,204) and (500,204), ridge (280,70)
+const chordY = (x: number) => (x <= 280 ? 204 - ((x - 60) * 134) / 220 : 204 - ((500 - x) * 134) / 220);
+const webXs = [110, 160, 210, 280, 350, 400, 450];
+const webs = webXs.map((x) => [x, chordY(x), x, T]);
+const diagonals = [
+  [110, T, 160, chordY(160)], [160, T, 210, chordY(210)], [210, T, 280, chordY(280)],
+  [350, chordY(350), 280, T], [400, chordY(400), 350, T], [450, chordY(450), 400, T],
+];
+const hatch = Array.from({ length: 26 }, (_, i) => 30 + i * 20);
+---
+<section class="hero" id="top">
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <h1>از زمین<br />تا کلید</h1>
+      <p class="hero__lead">
+        طراحی، تولید و اجرای سازه سبک فولادی <span dir="ltr">LSF</span> برای ویلا و خانه در مازندران.
+        زمینت رو تحویل می‌گیریم و خونه رو با کلیدش تحویل می‌دیم.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--gold" href="#estimate">برآورد هزینه ساخت</a>
+        <a class="btn btn--line" href="tel:+989353066900">تماس با <span dir="ltr">0935 306 6900</span></a>
+      </div>
+    </div>
+
+    <figure class="sheet" aria-label="نقشه نمای یک خانه با اسکلت فولادی سبک که مرحله به مرحله ساخته می‌شود">
+      <svg viewBox="0 0 560 430" class="draw" role="img" aria-hidden="true">
+        <g class="ground">
+          <line class="d" pathLength="1" x1="20" y1="380" x2="540" y2="380" />
+          {hatch.map((x) => <line class="h" x1={x} y1="380" x2={x - 10} y2="392" />)}
+          <rect class="d" pathLength="1" x="70" y="366" width="420" height="14" />
+          <line class="d track" pathLength="1" x1="76" y1={G} x2="484" y2={G} />
+        </g>
+
+        <g class="frame">
+          {studs.map(([x1, y1, x2, y2]) => <line class="stud" x1={x1} y1={y1} x2={x2} y2={y2} />)}
+          {crippleLines.map(([x1, y1, x2, y2]) => <line class="stud" x1={x1} y1={y1} x2={x2} y2={y2} />)}
+          {windows.map((w) => <>
+            <line class="stud" x1={w.x} y1={w.y1} x2={w.x + w.w} y2={w.y1} />
+            <line class="stud" x1={w.x} y1={w.y2} x2={w.x + w.w} y2={w.y2} />
+          </>)}
+          <line class="stud" x1={door.x} y1={door.y1} x2={door.x + door.w} y2={door.y1} />
+          <line class="d track" pathLength="1" x1="76" y1={T} x2="484" y2={T} />
+        </g>
+
+        <g class="truss">
+          <polyline points={`52,209 280,66 508,209`} />
+          {webs.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} />)}
+          {diagonals.map(([x1, y1, x2, y2]) => <line class="thin" x1={x1} y1={y1} x2={x2} y2={y2} />)}
+        </g>
+
+        <g class="light">
+          {windows.map((w) => <rect x={w.x + 3} y={w.y1 + 3} width={w.w - 6} height={w.y2 - w.y1 - 6} />)}
+          <rect x={door.x + 3} y={door.y1 + 3} width={door.w - 6} height={G - door.y1 - 3} />
+        </g>
+
+        <g class="dim">
+          <line x1="80" y1="410" x2="480" y2="410" />
+          <line x1="80" y1="402" x2="80" y2="418" /><line x1="480" y1="402" x2="480" y2="418" />
+          <line x1="530" y1={T} x2="530" y2={G} />
+          <line x1="522" y1={T} x2="538" y2={T} /><line x1="522" y1={G} x2="538" y2={G} />
+        </g>
+      </svg>
+
+      <ol class="stages" aria-label="مراحل">
+        <li data-stage="0">زمین</li>
+        <li data-stage="1">سازه</li>
+        <li data-stage="2">کلید</li>
+      </ol>
+
+      <table class="titleblock">
+        <caption class="sr-only">مشخصات کلی</caption>
+        <tbody>
+          <tr><th>سازه</th><td>فولاد گالوانیزه <span dir="ltr">LSF</span></td></tr>
+          <tr><th>از سازه تا تحویل</th><td>حدود ۲ ماه</td></tr>
+          <tr><th>جشنواره خانه رویایی</th><td>تا ۱۵٪ تخفیف و اقساط</td></tr>
+        </tbody>
+      </table>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-color: var(--graphite);
+    background-image:
+      linear-gradient(rgba(227, 229, 225, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(227, 229, 225, .045) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--zinc);
+    overflow: hidden;
+  }
+  .hero__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(3rem, 7vw, 6rem); }
+  h1 { font-size: var(--t-5); font-weight: 800; line-height: 1.25; }
+  .hero__lead { font-size: var(--t-2); color: #c3c8c3; margin: 1.6rem 0 2rem; max-width: 24em; line-height: 1.85; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: .8rem; }
+
+  .sheet { margin: 0; border: 1.5px solid #4a5257; padding: 1.2rem 1.2rem 0; background: rgba(31, 36, 40, .7); }
+  .draw { width: 100%; height: auto; overflow: visible; }
+  .draw line, .draw rect, .draw polyline { fill: none; stroke: var(--zinc); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .draw .h { stroke-width: 1; opacity: .4; }
+  .draw .thin { stroke-width: 1.4; opacity: .8; }
+  .draw .stud { stroke: #d6dad5; transform-box: fill-box; transform-origin: 50% 100%; }
+  .draw .truss line, .draw .truss polyline { stroke: var(--zinc); }
+  .draw .light rect { fill: var(--gold); stroke: none; opacity: .78; }
+  .draw .dim line { stroke: var(--red); stroke-width: 1.4; }
+
+  .stages { list-style: none; margin: 1rem -1.2rem 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid #4a5257; }
+  .stages li { padding: .7rem .4rem; text-align: center; font: 500 var(--t-1) var(--f-display); color: var(--steel-lo); position: relative; }
+  .stages li + li { border-inline-start: 1.5px solid #4a5257; }
+  .stages li.on { color: var(--zinc); }
+  .stages li.on::after { content: ""; position: absolute; inset-inline: 0; top: -1.5px; height: 3px; background: var(--gold); }
+
+  .titleblock { width: calc(100% + 2.4rem); margin: 0 -1.2rem; border-collapse: collapse; font-size: .88rem; }
+  .titleblock th, .titleblock td { border-top: 1.5px solid #4a5257; padding: .55rem 1.2rem; text-align: start; }
+  .titleblock th { font-weight: 300; color: var(--steel-lo); width: 46%; border-inline-end: 1.5px solid #4a5257; }
+  .titleblock td { font-weight: 500; }
+
+  /* Hidden starting state exists only when JS can play the sequence */
+  :global(.js-motion) .hero:not(.is-done) .d { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  :global(.js-motion) .hero:not(.is-done) .h,
+  :global(.js-motion) .hero:not(.is-done) .truss,
+  :global(.js-motion) .hero:not(.is-done) .light,
+  :global(.js-motion) .hero:not(.is-done) .dim { opacity: 0; }
+  :global(.js-motion) .hero:not(.is-done) .stud { transform: scaleY(0); }
+
+  @media (max-width: 880px) {
+    .hero__in { grid-template-columns: 1fr; }
+    .hero__lead { font-size: var(--t-1); }
+  }
+  @media (max-width: 480px) {
+    .hero__cta .btn { flex: 1 1 100%; }
+    .titleblock th { width: 50%; }
+  }
+</style>
+
+<script>
+  import { animate, stagger } from "motion";
+
+  const hero = document.querySelector<HTMLElement>(".hero")!;
+  const q = <T extends Element>(s: string) => Array.from(hero.querySelectorAll<T>(s));
+  const stages = q<HTMLLIElement>(".stages li");
+  const mark = (i: number) => stages.forEach((li, k) => li.classList.toggle("on", k === i));
+  const ease = [0.22, 1, 0.36, 1] as const;
+
+  async function play() {
+    mark(0);
+    await animate(q(".ground .d"), { strokeDashoffset: [1, 0] }, { duration: 0.7, ease, delay: stagger(0.12) });
+    animate(q(".ground .h"), { opacity: [0, 0.4] }, { duration: 0.4, delay: stagger(0.015) });
+
+    mark(1);
+    await animate(q(".frame .stud"), { scaleY: [0, 1] }, { duration: 0.5, ease, delay: stagger(0.045) });
+    animate(q(".frame .d"), { strokeDashoffset: [1, 0] }, { duration: 0.45, ease });
+    await animate(hero.querySelector(".truss")!, { opacity: [0, 1], y: [-36, 0] }, { duration: 0.65, ease });
+    animate(hero.querySelector(".dim")!, { opacity: [0, 1] }, { duration: 0.4 });
+
+    mark(2);
+    await animate(hero.querySelector(".light")!, { opacity: [0, 1] }, { duration: 0.6, ease: "easeOut" });
+    hero.classList.add("is-done");
+  }
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    mark(2);
+    hero.classList.add("is-done");
+  } else {
+    play();
+  }
+</script>

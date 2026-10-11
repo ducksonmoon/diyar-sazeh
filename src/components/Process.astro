@@ -1,0 +1,76 @@
+---
+const steps = [
+  { t: "مشاوره و برآورد", d: "متراژ و محدوده زمین و بودجه‌تون رو می‌گیریم و برآورد اولیه هزینه رو می‌دیم." },
+  { t: "طراحی و قرارداد", d: "نقشه‌ها و محاسبات نهایی می‌شه و قرارداد با جزئیات کار و زمان‌بندی امضا می‌شه." },
+  { t: "تولید سازه", d: "مقاطع LSF مطابق نقشه تولید و برای مونتاژ آماده می‌شن." },
+  { t: "اجرا", d: "اسکلت، اتصالات، دیوارها، سقف و تأسیسات به‌صورت اصولی اجرا می‌شن." },
+  { t: "تحویل کلید", d: "نازک‌کاری و نما تکمیل می‌شه و خونه رو تحویل می‌گیرید." },
+];
+const fa = (n: number) => n.toLocaleString("fa-IR");
+---
+<section id="process" class="block proc-wrap">
+  <div class="wrap proc">
+    <div class="proc__head">
+      <h2>پنج مرحله تا تحویل کلید</h2>
+      <p class="muted">از اولین تماس تا تحویل خونه، یک مسئول پیگیر کار شماست.</p>
+    </div>
+    <div class="steps">
+      <span class="steps__rail" aria-hidden="true"><span class="steps__fill"></span></span>
+      <ol>
+      {steps.map((s, i) => (
+        <li>
+          <span class="steps__n" aria-hidden="true">{fa(i + 1)}</span>
+          <h3>{s.t}</h3>
+          <p class="muted">{s.d}</p>
+        </li>
+      ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proc-wrap { background: var(--zinc-hi); }
+  .proc { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .proc__head { position: sticky; top: 110px; }
+  .proc__head h2 { margin-bottom: .8rem; }
+  .steps { position: relative; }
+  .steps ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.6rem; }
+  .steps__rail { position: absolute; inset-inline-start: 21px; top: 22px; bottom: 22px; width: 3px; background: var(--zinc-deep); }
+  .steps__fill { position: absolute; inset: 0; background: var(--gold); transform-origin: top; }
+  .steps li { position: relative; padding-inline-start: 4.2rem; }
+  .steps__n {
+    position: absolute; inset-inline-start: 0; top: 0; width: 45px; height: 45px; display: grid; place-items: center;
+    font: 600 var(--t-2) var(--f-display); background: var(--zinc-hi); border: 2px solid var(--graphite); border-radius: 50%;
+    transition: background-color .3s, color .3s, border-color .3s;
+  }
+  .steps li.reached .steps__n { background: var(--graphite); color: var(--gold-hi); }
+  .steps h3 { padding-top: .45rem; margin-bottom: .3rem; }
+  .steps p { margin: 0; }
+  :global(.js-motion) .steps__fill { transform: scaleY(0); }
+  @media (max-width: 880px) {
+    .proc { grid-template-columns: 1fr; }
+    .proc__head { position: static; }
+  }
+</style>
+
+<script>
+  import { animate, scroll, inView } from "motion";
+
+  const list = document.querySelector<HTMLElement>(".steps")!;
+  const fill = list.querySelector<HTMLElement>(".steps__fill")!;
+  const items = Array.from(list.querySelectorAll<HTMLLIElement>("li"));
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    fill.style.transform = "none";
+    items.forEach((li) => li.classList.add("reached"));
+  } else {
+    scroll(animate(fill, { scaleY: [0, 1] }, { ease: "linear" }), {
+      target: list,
+      offset: ["start 65%", "end 65%"],
+    });
+    items.forEach((li) =>
+      inView(li, () => li.classList.add("reached"), { margin: "0px 0px -35% 0px" }),
+    );
+  }
+</script>

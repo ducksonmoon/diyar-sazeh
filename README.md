@@ -1,22 +1,43 @@
 # Diar Sazeh (دیار سازه) — Website
 
-Static, RTL Persian landing site for **Diar Sazeh**, an LSF (light steel frame) building contractor in Sari / Mahdasht, Mazandaran.
-Content and brand (black & gold, steel-frame imagery) are based on the company's Instagram: [@diyarsazeh.construction](https://www.instagram.com/diyarsazeh.construction/).
+Persian (RTL) marketing site for **Diar Sazeh**, an LSF (light steel frame) building contractor in Sari / Mahdasht, Mazandaran.
+Content comes from the company's Instagram ([@diyarsazeh.construction](https://www.instagram.com/diyarsazeh.construction/)); see `CONTENT.md`.
 
-## Sections
-Hero ("از زمین تا کلید") · Dream House festival (up to 15% off + installments) · What is LSF · Services · Build process · Facade styles · Projects (linked to Instagram reels) · FAQ · Cost-estimate form (pre-fills an SMS to 09353066900) · Contact.
+## Stack
+- [Astro](https://astro.build) — static output, zero JS by default, one component per section.
+- [Motion](https://motion.dev) — hero assembly sequence, scroll-linked process timeline, FAQ/menu disclosure (~55 KB shared chunk, loaded only by components that animate).
 
-## Run
-No build step — open `index.html`, or serve the folder:
-
+## Commands
 ```sh
-npx serve .   # or: python3 -m http.server
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # static site in dist/
+npm run preview
 ```
+Deploy `dist/` to any static host (GitHub Pages, Netlify, Vercel, ArvanCloud…). Set `site` in `astro.config.mjs` to the real domain.
 
-Deploy to any static host (GitHub Pages, Netlify, Vercel, an Iranian host such as ArvanCloud, etc.).
+## Design system ("galvanized")
+| Token | Value | Use |
+|---|---|---|
+| zinc | `#E3E5E1` | page background (galvanized sheet) |
+| zinc-deep | `#CDD1CC` | festival band, rules |
+| graphite | `#1F2428` | text, dark sections |
+| steel | `#5F676D` | secondary text |
+| gold | `#C6963A` | brand; primary actions and lit windows only |
+| marking red | `#C2412D` | dimension lines in the hero drawing |
 
-## Files
-- `index.html` — markup, SEO meta, LocalBusiness JSON-LD
-- `styles.css` — design tokens, layout, responsive rules
-- `main.js` — mobile menu, scroll reveal, estimate form → SMS
-- `assets/img/` — logo and post images taken from the Instagram account
+- Type: **Noto Kufi Arabic** (headings, geometric/structural, correct Persian letterforms) + **Readex Pro** (body).
+- Recurring device: the *stud rail* — a C-stud web with oval service holes (`.rail`).
+- Motion rules live in `.claude/skills/motion-design/SKILL.md`. One orchestrated moment (hero: زمین → سازه → کلید); everything else answers the visitor. `prefers-reduced-motion` is respected.
+
+## Structure
+```
+src/
+  layouts/Base.astro        <head>, fonts, JSON-LD
+  pages/index.astro         section order
+  components/               Header, Hero, Festival, WhyLsf, Addition, Services,
+                            Process, Styles, Projects, Faq, Estimate, Footer
+  styles/global.css         tokens, buttons, rail
+public/img/                 logo and photos from Instagram posts/stories
+```
+The estimate form opens the visitor's SMS app with a pre-filled request to 09353066900 (no backend).

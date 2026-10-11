@@ -1,0 +1,26 @@
+---
+const year = new Date().toLocaleDateString("fa-IR", { year: "numeric" });
+---
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__name">دیار سازه، شرکت فرایند نوین ساختمانی</p>
+    <p>پیمانکار رسمی ساختمان؛ تولید و اجرای پروژه با سازه <span dir="ltr">LSF</span> در ساری و مازندران.</p>
+    <p>© {year}</p>
+  </div>
+</footer>
+<a class="call" href="tel:+989353066900" aria-label="تماس تلفنی با دیار سازه">
+  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" /></svg>
+</a>
+
+<style>
+  .foot { background: #171b1e; color: var(--steel-lo); font-size: .85rem; padding-block: 2rem 5rem; }
+  .foot__in { display: flex; flex-wrap: wrap; gap: .4rem 2rem; justify-content: space-between; }
+  .foot p { margin: 0; }
+  .foot__name { color: var(--zinc); font-family: var(--f-display); }
+  .call {
+    position: fixed; bottom: 16px; inset-inline-start: 16px; z-index: 40; width: 54px; height: 54px; border-radius: 50%;
+    display: none; place-items: center; background: var(--gold); color: var(--graphite); box-shadow: 0 6px 18px rgba(31, 36, 40, .35);
+  }
+  .call path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+  @media (max-width: 880px) { .call { display: grid; } }
+</style>
