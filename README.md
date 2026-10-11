@@ -30,7 +30,7 @@ Public assets are referenced through `asset()` in `src/lib.ts` so they follow th
 | gold | `#C6963A` | brand; primary actions and lit windows only |
 | marking red | `#C2412D` | dimension lines in the hero drawing |
 
-- Type: **Noto Kufi Arabic** (headings, geometric/structural, correct Persian letterforms) + **Readex Pro** (body).
+- Type: **Vazirmatn** throughout — 900 hero, 800 headings, 700 subheads, 400 body.
 - Recurring device: the *stud rail* — a C-stud web with oval service holes (`.rail`).
 - Motion rules live in `.claude/skills/motion-design/SKILL.md`. One orchestrated moment (hero: زمین → سازه → کلید); everything else answers the visitor. `prefers-reduced-motion` is respected.
 

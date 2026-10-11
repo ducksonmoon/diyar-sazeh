@@ -23,8 +23,7 @@ const items = [
         </button>
       </div>
     </div>
-  </div>
-  <ul class="strip" tabindex="0" aria-label="ویدیوهای پروژه‌ها؛ برای دیدن بیشتر افقی اسکرول کنید">
+    <ul class="strip" tabindex="0" aria-label="ویدیوهای پروژه‌ها؛ برای دیدن بیشتر افقی اسکرول کنید">
     {items.map((it) => (
       <li>
         <a href={it.href} target="_blank" rel="noopener">
@@ -33,18 +32,19 @@ const items = [
         </a>
       </li>
     ))}
-  </ul>
-  <div class="wrap proj__foot">
-    <a class="btn btn--line" href={`${ig}/`} target="_blank" rel="noopener">همه پروژه‌ها در اینستاگرام</a>
+    </ul>
+    <div class="proj__foot">
+      <a class="btn btn--line" href={`${ig}/`} target="_blank" rel="noopener">همه پروژه‌ها در اینستاگرام</a>
+    </div>
   </div>
 </section>
 
 <style>
   .proj__head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; }
   .strip {
-    list-style: none; margin: 0; padding: 0 max(var(--gutter), calc((100% - var(--wrap)) / 2)) 1rem;
-    display: grid; grid-auto-flow: column; grid-auto-columns: clamp(200px, 24vw, 280px); gap: 1rem;
-    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(var(--gutter), calc((100% - var(--wrap)) / 2));
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3rem) / 4); gap: 1rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
     scrollbar-width: none;
   }
   .strip::-webkit-scrollbar { display: none; }
@@ -58,7 +58,9 @@ const items = [
   .arrow:active:not(:disabled) { transform: translateY(2px); }
   .arrow:disabled { opacity: .3; cursor: default; }
   .arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .proj__foot { margin-top: 2rem; }
+  .proj__foot { margin-top: 2rem; text-align: center; }
+  @media (max-width: 960px) { .strip { grid-auto-columns: calc((100% - 2rem) / 3); } }
+  @media (max-width: 680px) { .strip { grid-auto-columns: calc((100% - 1rem) / 1.6); } }
   .strip li { scroll-snap-align: start; }
   .strip a { display: block; text-decoration: none; }
   .strip img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 4px; background: var(--graphite-2); }
